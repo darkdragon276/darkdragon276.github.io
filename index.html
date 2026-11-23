@@ -1,59 +1,202 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en" class="t-classic">
 <head>
-  <!--
-    If you are serving your web app in a path other than the root, change the
-    href value below to reflect the base path you are serving from.
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chu Hai Nam — Embedded Systems Engineer</title>
+<meta name="description" content="Embedded Systems Engineer · Hardware · Firmware · Embedded Linux">
+<script>
+(function () {
+  var T = ["classic", "compact", "executive"], t = new URLSearchParams(location.search).get('t');
+  if (!t) { try { t = localStorage.getItem('cv-theme'); } catch (e) {} }
+  if (T.indexOf(t) >= 0) document.documentElement.className = 't-' + t;
+})();
+</script>
+<style>
+:root { --ink: #1b1f24; --muted: #555d66; --rule: #c9ced4; --accent: #1f3a5f; --paper: #fff; --desk: #e6e9ed; }
+* { box-sizing: border-box; }
+html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+body { margin: 0; background: var(--desk); color: var(--ink); }
+a { color: var(--accent); text-decoration: none; }
+h1, h2, h3, h4, p, ul { margin: 0; }
+.page { display: flex; flex-direction: column; background: var(--paper); width: 210mm; min-height: 297mm;
+  margin: 24px auto; padding: 14mm 15mm; box-shadow: 0 2px 14px rgba(0, 0, 0, .15); }
+.sec { margin-top: 1.05em; }
+.sec > h2 { font-size: 1em; letter-spacing: .08em; text-transform: uppercase; color: var(--accent);
+  border-bottom: 1px solid var(--rule); padding-bottom: .15em; margin-bottom: .45em; }
+.row { display: flex; justify-content: space-between; align-items: baseline; gap: 1em; }
+.row .r { white-space: nowrap; color: var(--muted); font-size: .95em; }
+.job { margin-bottom: .75em; break-inside: auto; }
+.job > .row h3 { font-size: 1.08em; }
+.sub { color: var(--muted); font-style: italic; }
+.proj { margin-top: .4em; break-inside: avoid; }
+.proj h4 { font-size: 1em; }
+.stack, .meta { color: var(--muted); font-size: .92em; }
+ul { padding-left: 1.15em; }
+li { margin: .12em 0; }
+.skills p { margin: 0 0 .12em; break-inside: avoid; }
+.skills b { color: var(--ink); }
+.head .headline { font-size: 1.12em; color: var(--accent); margin-top: .1em; }
+.head .contact { color: var(--muted); margin-top: .35em; font-size: .95em; }
+.head .contact span + span::before { content: " · "; }
+.photo { display: none; }
+.lnk { font-size: .92em; }
+.sum-short, .s-highlights { display: none; }
 
-    The path provided below has to start and end with a slash "/" in order for
-    it to work correctly.
+/* section order per template */
+.head { order: 0; } .s-summary { order: 1; } .s-highlights { order: 2; } .s-skills { order: 3; }
+.s-experience { order: 4; } .s-projects { order: 5; } .s-education { order: 6; } .s-languages { order: 7; } .s-activities { order: 8; }
 
-    For more details:
-    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
+/* Classic ATS: one column, sans-serif */
+.t-classic body { font: 10pt/1.32 Calibri, Carlito, "Segoe UI", "Helvetica Neue", Arial, sans-serif; }
+.t-classic h1 { font-size: 22pt; letter-spacing: .02em; }
 
-    This is a placeholder for base href that will be replaced by the value of
-    the `--base-href` argument provided to `flutter build`.
-  -->
-  <base href="/">
+/* Executive: serif, centred header, achievements first */
+.t-executive body { font: 9.8pt/1.32 Georgia, Cambria, "Times New Roman", serif; }
+.t-executive { --accent: #13294b; }
+.t-executive .head { text-align: center; border-bottom: 2px solid var(--accent); padding-bottom: .7em; }
+.t-executive .head h1 { font-size: 26pt; font-weight: normal; letter-spacing: .06em; text-transform: uppercase; }
+.t-executive .sec > h2 { font-variant: small-caps; text-transform: none; font-size: 1.15em; letter-spacing: .06em; border: 0;
+  padding: 0; display: flex; align-items: center; gap: .6em; }
+.t-executive .sec > h2::after { content: ""; flex: 1; border-top: 1px solid var(--rule); }
+.t-executive .s-highlights { display: block; }
+.t-executive .s-skills { order: 6; } .t-executive .s-education { order: 5; }
+.t-executive .s-activities, .t-executive .more, .t-executive .stack { display: none; }
+.t-executive .skills { columns: 2; column-gap: 1.6em; }
+.t-executive .photo { display: block; width: 28mm; height: 36mm; object-fit: cover; margin: 0 auto .6em; }
 
-  <meta charset="UTF-8">
-  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="A new Flutter project.">
+/* Compact: one dense page, key bullets only */
+.t-compact body { font: 8.3pt/1.25 "Segoe UI", Calibri, Arial, sans-serif; }
+.t-compact .page { padding: 9mm 11mm; }
+.t-compact h1 { font-size: 17pt; }
+.t-compact .head { display: grid; grid-template-columns: auto 1fr; column-gap: 1.2em; align-items: baseline; }
+.t-compact .head .contact { grid-column: 1 / -1; margin-top: .15em; }
+.t-compact .sec { margin-top: .5em; }
+.t-compact .s-languages { display: flex; gap: .8em; align-items: baseline; }
+.t-compact .s-languages h2 { border: 0; margin: 0; padding: 0; }
+.t-compact .sec > h2 { margin-bottom: .25em; }
+.t-compact .more, .t-compact .s-activities, .t-compact .sum-full, .t-compact .sub, .t-compact .stack { display: none; }
+.t-compact .sum-short { display: block; }
+.t-compact .skills { columns: 2; column-gap: 1.4em; }
+.t-compact .proj { margin-top: .2em; }
+.t-compact .job { margin-bottom: .4em; }
+.t-compact li { margin: .05em 0; }
 
-  <!-- iOS meta tags & icons -->
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="chatott">
-  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+/* meta.education_first: Education right after the summary (and highlights) */
+.edu-first .s-education { order: 2; }
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="favicon.png"/>
+/* template switcher (screen only) */
+.bar { position: fixed; top: 12px; right: 12px; display: flex; gap: 4px; z-index: 9; font: 13px system-ui, sans-serif; }
+.bar button { border: 1px solid #9aa3ad; background: #fff; padding: 6px 10px; border-radius: 4px; cursor: pointer; }
+.bar button[aria-pressed="true"] { background: var(--accent); color: #fff; border-color: var(--accent); }
 
-  <title>chatott</title>
-  <link rel="manifest" href="manifest.json">
-
-  <script>
-    // The value below is injected by flutter build, do not touch.
-    const serviceWorkerVersion = "3186470366";
-  </script>
-  <!-- This script adds the flutter initialization JS code -->
-  <script src="flutter.js" defer></script>
+@media screen and (max-width: 860px) {
+  .page { width: auto; min-height: 0; margin: 0; padding: 56px 16px 24px; box-shadow: none; }
+  .t-compact .page { padding: 56px 16px 24px; }
+  .row { flex-wrap: wrap; gap: 0 1em; }
+  .t-compact .skills, .t-executive .skills { columns: 1; }
+  .bar { left: 8px; right: 8px; flex-wrap: wrap; justify-content: flex-end; }
+}
+@page { size: A4; margin: 13mm 14mm; }
+@page compact { size: A4; margin: 7mm 9mm; }
+@media print {
+  body { background: none; }
+  .t-compact body { page: compact; }
+  .bar { display: none; }
+  .page { width: auto; min-height: 0; margin: 0; padding: 0; box-shadow: none; }
+  .t-compact .page { padding: 0; }
+  .sec > h2 { break-after: avoid; }
+}
+</style>
 </head>
 <body>
-  <script>
-    window.addEventListener('load', function(ev) {
-      // Download main.dart.js
-      _flutter.loader.loadEntrypoint({
-        serviceWorker: {
-          serviceWorkerVersion: serviceWorkerVersion,
-        },
-        onEntrypointLoaded: function(engineInitializer) {
-          engineInitializer.initializeEngine().then(function(appRunner) {
-            appRunner.runApp();
-          });
-        }
-      });
+<nav class="bar" aria-label="Template"><button type="button" data-t="classic">Classic</button><button type="button" data-t="compact">Compact</button><button type="button" data-t="executive">Executive</button><button type="button" data-print>Print / PDF</button>
+</nav>
+<main class="page">
+<header class="head">
+  <h1>Chu Hai Nam</h1>
+  <p class="headline">Embedded Systems Engineer · Hardware · Firmware · Embedded Linux</p>
+  <p class="contact">
+    <span>Ho Chi Minh City, Vietnam</span>
+    <span><a href="mailto:chuhai.nam1997@gmail.com">chuhai.nam1997@gmail.com</a></span><span><a href="https://www.linkedin.com/in/hai-nam-chu-58aa0914a/">linkedin.com/in/hai-nam-chu-58aa0914a</a></span><span><a href="https://github.com/darkdragon276">github.com/darkdragon276</a></span><span><a href="https://darkdragon276.github.io">darkdragon276.github.io</a></span>  </p>
+</header>
+
+<section class="sec s-summary">
+  <h2>Summary</h2>
+  <p class="sum-full">Embedded systems engineer with 7+ years in safety-related firmware, embedded Linux and hardware for EV chargers, automotive ECUs (AUTOSAR, onsite at Bosch) and IoT. Main developer of a dual-domain DC charger: FreeRTOS firmware on TI Cortex-R5F (safety chain, power-module control, CANopen/J1939/GB/T battery communication), CCS (ISO 15118-2) and OCPP 2.0.1 communication, Yocto Linux with A/B OTA, automated testing and the Qt/QML HMI. Earlier designed charger boards and an automated production test station. MSc in Computer Science (HCMUT, 2026) with deep-learning time-series research; AI-assisted development with Claude Code.</p>
+  <p class="sum-short">Embedded systems engineer, 7+ years in safety-related firmware, embedded Linux and hardware for EV chargers, automotive ECUs and IoT; main developer of a DC charger from FreeRTOS safety and power control to CCS/OCPP, Yocto OTA and test automation. MSc Computer Science (HCMUT).</p>
+</section>
+
+<section class="sec s-highlights">
+  <h2>Key Achievements</h2>
+  <ul><li>Main developer of a dual-domain DC charger (2 EV ports 300–1000 V, 2 eGSE ports 24–96 V): MCU firmware and Linux HMI, 14 image releases in 2026.</li><li>Designed its safety chain in real-time firmware: GFCI true-RMS leakage measurement at 50 kHz, insulation monitoring, contactor weld detection and a 17-case power-on self test.</li><li>Brought up CCS charging through EVerest and PLC modems, and connected the charger to an OCPP 2.0.1 back end.</li><li>Built A/B OTA deployment for Linux and the MCU, and automated testing at two levels: a device mock with a Python harness and a production test station for 3 board types.</li><li>Cut reported HMI defects by ~80% across 3 oven product lines (onsite at Bosch).</li></ul>
+</section>
+
+<section class="sec s-skills">
+  <h2>Skills</h2>
+  <div class="skills">    <p class="sk"><b>EV charging:</b> CCS (ISO 15118-2, DIN 70121) via EVerest, HomePlug GP/SLAC, OCPP 2.0.1, IEC 61851, GB/T, ChargeX MREC</p>    <p class="sk"><b>Firmware:</b> safety state machines, FreeRTOS, bare-metal drivers (MCAN, EDMA, EPWM, ADC, SPI, I2C, UART), bootloader and flash, ESP-IDF</p>    <p class="sk"><b>Protocols &amp; buses:</b> CANopen, SAE J1939, CAN, Modbus RTU, RS-485/RS-232, BLE, Wi-Fi, LTE, GPS, protobuf</p>    <p class="sk"><b>Embedded Linux:</b> Yocto/BitBake, device tree, systemd, D-Bus, NetworkManager/ModemManager, MQTT, Qt 6/QML</p>    <p class="sk"><b>Hardware:</b> power stages, RF/antenna, impedance-controlled routing, multilayer PCB, bring-up, harness design; Altium Designer, KiCad</p>    <p class="sk"><b>Test &amp; deploy:</b> A/B OTA (Linux and MCU), Yocto release images, device mocks, Python test harnesses, automated screenshot tours, production test fixtures, ISO/IEC/IEEE 29119-3 reports</p>    <p class="sk"><b>Machine learning:</b> LSTM, CNN, ResNet50 transfer learning, STL decomposition with Holt-Winters, SVM feature fusion, random forest, decision tree, k-NN, naive Bayes; TensorFlow/Keras, scikit-learn, statsmodels, OpenCV</p>    <p class="sk more"><b>Automotive:</b> AUTOSAR (COM, Diagnostics), CAN, customer-requirement-driven process</p>    <p class="sk"><b>MCU / SoC:</b> TI AM263Px (Cortex-R5F), NXP i.MX8M Plus, TI AM62x, STM32F2/F4, TM4C123/129, ESP32/ESP32-S3, ATmega328P, Renesas RH850</p>    <p class="sk"><b>Languages:</b> C, C++17, Python, Go, C#, QML, TypeScript, Dart</p>    <p class="sk"><b>AI tools:</b> Claude Code (subagents, skills, MCP servers) in spec-first, reviewed development workflows</p>    <p class="sk more"><b>Tools:</b> Git, GitHub Actions, Jenkins, Docker, Jira, CCS/SysConfig, Keil, J-Link, Qt Creator, Figma</p>  </div>
+</section>
+
+<section class="sec s-experience">
+  <h2>Experience</h2>  <article class="job">
+    <div class="row"><h3>Minit Charger — Embedded Systems Engineer / Software Engineer</h3><span class="r">Apr 2024 – Present</span></div><p class="sub">Manufacturer of EV and electric ground-support-equipment (eGSE) chargers, Ho Chi Minh City</p>    <div class="proj">
+      <div class="row"><h4>Dual-domain DC charger — firmware, HMI and Linux platform</h4><span class="r">May 2025 – Present</span></div><p class="stack">TI AM263Px (Cortex-R5F) · FreeRTOS · NXP i.MX8M Plus · Yocto · Qt 6.5/QML · C++17 · EVerest · OCPP 2.0.1 · Go</p>      <ul><li>Charger with 2 DC EV ports (300–1000 V) and 2 eGSE ports (24–96 V) for airport ground-support vehicles; main developer of the MCU firmware (FreeRTOS, layered drivers, services and applications) and the Linux HMI.</li><li>Safety: control-pilot state machine, insulation monitoring, contactor weld detection, GFCI with 50 kHz true-RMS leakage measurement (5–30 mA trip), E-stop and a 17-case power-on self test.</li><li>Power management: single owner of the DC power modules over CAN (ACK-confirmed commands, per-cable current limits), jet-bridge power priority and port sequencing between paired chargers.</li><li>EV communication: CCS (ISO 15118-2 / DIN 70121) through EVerest with 2× QCA7000 PLC modems (SLAC); OCPP 2.0.1 daemon in C++17 (libocpp, sdbus-c++) connecting the charger to a CitrineOS back end.</li><li>eGSE charging: CANopen (CANopenNode port), SAE J1939 and GB/T battery communication; lead-acid and lithium charge algorithms.</li><li>Deployment: A/B OTA updater in Go for Linux and the MCU, resuming after reboot; root filesystem cut from 2.2 GB to 1.2 GB; 14 image releases in 2026.</li><li>Test automation: device mock, Python harness and automated screenshot tour with ISO/IEC/IEEE 29119-3 reports; C# power-module simulator for bench tests.</li><li class="more">HMI: 4-port live dashboard, SQLite-backed settings, self-test and firmware-update pages, Wi-Fi/LTE through NetworkManager/ModemManager over D-Bus, i18n, custom on-screen keyboard; MCU–Linux link protocol (object dictionary, remote calls, heartbeat, fault and log push).</li></ul>
+    </div>    <div class="proj">
+      <div class="row"><h4>Charger hardware and production test</h4><span class="r">Apr 2024 – Nov 2025</span></div><p class="stack">Altium Designer · ATmega328P · STM32F205 · TM4C129 · FreeRTOS · C#/WPF</p>      <ul><li>Hardware in Altium: AC Level-2 EVSE control and connector boards (ATmega328P, OpenEVSE-based firmware, GFCI test), interface-board power-section redesign, charge-controller revisions (50 Ω RF traces, 100 Ω differential pairs, stack-up) and harnesses.</li><li>Production test automation: STM32F205/FreeRTOS fixture board, test firmware for 3 TM4C129 boards (RS-485, CAN, BLE, Wi-Fi, cellular, GPS, RTC, ADC, relays) and a C#/WPF operator app that flashes, tests and logs each unit; versioned release packages.</li></ul>
+    </div>    <div class="proj">
+      <div class="row"><h4>Next-generation charge controller (TI AM62x)</h4><span class="r">Oct 2026 – Present</span></div><p class="stack">Qt 6.5 · TI Processor SDK 11 (Yocto, kernel 6.12)</p>      <ul><li>Moving an MCU-rendered (STemWin) UI and its cellular, Ethernet, Wi-Fi, GNSS, server-link and logging functions to a Qt app on AM62x Linux; custom Yocto layer and SOM device tree.</li></ul>
+    </div>  </article>  <article class="job">
+    <div class="row"><h3>Ban Vien Corporation — Software Developer</h3><span class="r">May 2021 – Apr 2024</span></div><p class="sub">Onsite at Robert Bosch Engineering and Business Solutions Vietnam (RBVH), Ho Chi Minh City</p>    <div class="proj">
+      <div class="row"><h4>AUTOSAR application — ABS ECU</h4><span class="r">1 year · team of 4</span></div><p class="stack">C · AUTOSAR (COM, Diagnostics) · CAN</p>      <ul><li>AUTOSAR application software (COM, diagnostics) in C for an ABS ECU, from customer requirements through release.</li></ul>
+    </div>    <div class="proj">
+      <div class="row"><h4>Household-appliance HMI — oven embedded display (Linux)</h4><span class="r">2 years · team of 3–6</span></div><p class="stack">Qt/QML · C++ · Embedded Linux</p>      <ul><li>Optimised start-up time and UI responsiveness across 3 product lines; refactored the front-end architecture and cut reported defects by ~80%.</li><li class="more">Built a reusable Qt/QML component framework shared by all oven variants.</li><li class="more">Designed and implemented complex Qt/QML screens, animations and interaction flows for production ovens.</li></ul>
+    </div>  </article>  <article class="job">
+    <div class="row"><h3>Nanochip Company — Embedded Developer (Hardware &amp; Firmware)</h3><span class="r">Feb 2019 – Apr 2021</span></div>    <div class="proj">
+      <div class="row"><h4>Mesh-network irrigation system</h4><span class="r">team of 2</span></div><p class="stack">ESP32 · RTOS · Wi-Fi mesh · Google Cloud</p>      <ul><li>Valve node and master controller hardware (power, Wi-Fi, valve driver) and RTOS firmware logging sensor data to Google Cloud.</li></ul>
+    </div>    <div class="proj more">
+      <div class="row"><h4>Smart LED light for taxis</h4><span class="r">team of 2</span></div><p class="stack">BLE · protobuf · GPS · LED matrix</p>      <ul><li>Designed LED-matrix and RGB driver, Wi-Fi and power hardware; firmware with protobuf messaging over BLE to an Android app and GPS location.</li></ul>
+    </div>  </article></section>
+
+<section class="sec s-projects">
+  <h2>Selected Projects</h2>  <div class="proj">
+    <div class="row"><h4>Autonomous service robot (embedded and electronics lead) · Freelance</h4><span class="r">Aug 2023 – Jun 2025</span></div><p class="stack">ESP32 (ESP-IDF, FreeRTOS) · protobuf-c · ROS 2 · Altium · ATmega328P</p>    <ul><li>Owned the robot electronics; ESP32 control firmware (relays, E-stop, LEDs, fans, battery and temperature sensing, OTA) linked to ROS 2 over protobuf UART across 3 hardware revisions, control board V2.0–V3.1 and 13S battery/charger adapter boards in Altium.</li><li class="more">Adapter firmware (ATmega328P) with charge state machine and PID current control; ROS 2 (rclpy) serial-bridge node for MCU status and emergency stop.</li></ul>
+  </div>  <div class="proj">
+    <div class="row"><h4>BLE motion-sensor companion app (iOS/Android) · Freelance</h4><span class="r">Sep 2025 – Apr 2026 · team of 4</span></div><p class="stack">React Native/Expo · TypeScript · react-native-ble-plx · SQLite · Redux</p>    <ul><li>Main contributor to an app for a BLE head/neck motion sensor: BLE service (scan, bind, multi-chunk framing, device commands), cervical range-of-motion and joint-position-sense assessments, calibration, PDF export.</li><li class="more">Android/iOS build and release pipeline (signing, versioning, TestFlight and Google Play upload guide).</li></ul>
+  </div>  <div class="proj more">
+    <div class="row"><h4>Real-time chat app (MSc Software Architecture course)</h4><span class="r">Mar – May 2024</span></div><p class="stack">Flutter/Dart · Clean Architecture · STOMP WebSocket · Spring Boot · GitHub Actions</p>    <ul><li>Set up the clean-architecture structure (data, domain, use cases, presentation) and built sign-in, conversations and STOMP WebSocket messaging; CI deploy of the web build.</li></ul>
+  </div></section>
+
+<section class="sec s-education">
+  <h2>Education</h2>  <div class="proj">
+    <div class="row"><h4>MSc in Computer Science — Ho Chi Minh City University of Technology (HCMUT)</h4><span class="r">2023 – 2026</span></div><p class="meta">GPA 8.2/10</p>    <ul><li>Thesis (graded 8.2/10): river run-off forecasting with a hybrid STL + Holt + Holt-Winters + LSTM model; NSE 0.83–0.93 on three Srepok river stations and 2.6–10.3% lower RMSE than a single LSTM (Python, TensorFlow/Keras, statsmodels).</li><li class="more">Key courses: Software Architecture (clean-architecture chat app), Software Testing (black-box test design, Selenium test automation), Software Security (white-box fuzzing, symbolic execution, LLM-based vulnerability detection), Network Security (ESP32 Wi-Fi deauthentication and DDoS demo, HTTPS hardening), Intelligent Systems (fruit-ripeness recognition: SVM feature fusion, 90% accuracy, 71% faster than a fine-tuned ResNet50), Machine Learning, NLP, Data Engineering, Advanced Algorithms, Project Management (team lead of 9).</li></ul>
+  </div>  <div class="proj">
+    <div class="row"><h4>BEng in Control Engineering and Automation — Ho Chi Minh City University of Technology (HCMUT)</h4><span class="r">2015 – 2019</span></div><p class="meta">GPA 8.0/10</p>    <ul><li class="more">Thesis: 5-DOF robot arm controlled by image processing; servo driver board, kinematics firmware and a Qt/OpenCV vision GUI.</li></ul>
+  </div></section>
+
+<section class="sec s-languages">
+  <h2>Languages</h2>
+  <p>English — professional working proficiency (VSTEP B2, 2026) · Vietnamese — native</p>
+</section>
+
+<section class="sec s-activities">
+  <h2>Activities</h2>
+  <ul>    <li><b>FPT Digital Race</b> (2018 – 2019): Autonomous model car in a team of 4; lane detection in C++/OpenCV with a neural network, ROS/MQTT integration; team certificate.</li>    <li><b>Two-wheel self-balancing robot</b> (2016 – 2017): TM4C123, Kalman-filtered MPU6050 pitch angle, PID control.</li>    <li><b>PiF Club, HCMUT</b> (2017 – 2019): Lecturer and organiser of microcontroller courses; organiser of the Raise Your Arm 2017 drone competition (RSSI ranging tests, ArduPilot user-space functions; supporter certificate).</li>  </ul>
+</section>
+</main>
+<script>
+(function () {
+  var root = document.documentElement, btns = document.querySelectorAll('.bar [data-t]');
+  function mark() { btns.forEach(function (b) { b.setAttribute('aria-pressed', root.className === 't-' + b.dataset.t); }); }
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      root.className = 't-' + b.dataset.t; mark();
+      try { localStorage.setItem('cv-theme', b.dataset.t); } catch (e) {}
+      history.replaceState(null, '', '?t=' + b.dataset.t);
     });
-  </script>
+  });
+  document.querySelector('.bar [data-print]').addEventListener('click', function () { window.print(); });
+  mark();
+})();
+</script>
 </body>
 </html>
